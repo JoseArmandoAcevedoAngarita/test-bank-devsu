@@ -78,7 +78,15 @@ export class ListOfFinancialProductsComponent implements OnInit, OnDestroy {
       }
     })
   }
-  
+
+  // Edit Produt
+
+  editProduct(item: FinancialProduct){
+    this.router.navigate(['/editar-producto'], {queryParams: { form: JSON.stringify(item) }});
+  }
+
+  // Delete Produt
+
   deleteProduct(id: string){
     this.deleteFinancialProductsSubscription =  this.financialProductsService.deleteFinancialProduct(id)
     .subscribe({
@@ -89,10 +97,6 @@ export class ListOfFinancialProductsComponent implements OnInit, OnDestroy {
         this.openDialogAlert('Ha ocurrido un error al intentar borrar el producto, vuelva a intentarlo.')
       },
     })
-  }
-
-  editProduct(item: FinancialProduct){
-    this.router.navigate(['/editar-producto'], {queryParams: { form: JSON.stringify(item) }});
   }
 
   openDialog(item: FinancialProduct) {
@@ -128,6 +132,8 @@ export class ListOfFinancialProductsComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  // Pagination
 
   onPageSizeChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
