@@ -1,0 +1,106 @@
+<div class=" bg-white border border-gray-200 rounded-lg overflow-hidden">
+
+  <div class="border-b border-gray-700 p-6">
+    <h1 class="font-semibold text-5xl text-center mb-0">{{state === 'new'? 'Formulario de registro' : 'Editar Registro' }}</h1>
+  </div>
+  <div class="bg-white py-5 px-10 md:px-20">
+    
+  <form [formGroup]="form" (submit)="state === 'new'? saveForm() : updateForm()">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+      <div>
+        <label for="id" class="form-label">ID</label>
+        <input type="text" id="id" formControlName="id" class="form-control" [disabled]="form.pending" [placeholder]="form.pending? 'Buscando...' : '' " required />
+        @if(id.dirty && idErrors['required']){
+          <p class="mt-2 text-sm text-red-600">
+            <span class="font-medium">Oh, ¡Vaya!</span> ¡ID es requerido!
+          </p>
+        }
+        @if(id.dirty && idErrors['minlength']){
+          <p class="mt-2 text-sm text-red-600">
+            <span class="font-medium">Oh, ¡Vaya!</span> ¡ID es muy corto!
+          </p>
+        }
+        @if(id.dirty && idErrors['maxlength']){
+          <p class="mt-2 text-sm text-red-600">
+            <span class="font-medium">Oh, ¡Vaya!</span> ¡ID es muy largo!
+          </p>
+        }
+        @if(id.dirty && idErrors['idExists']){
+          <p  class="mt-2 text-sm text-red-600">
+            <span class="font-medium">Oh, ¡Vaya!</span> ¡ID no Válido!
+          </p>
+        }
+      </div>
+      <div>
+        <label for="name" class="form-label">Nombre</label>
+        <input type="text" id="name" formControlName="name" class="form-control" required />
+        @if(name.dirty && nameErrors['required']){
+          <p class="mt-2 text-sm text-red-600">
+            <span class="font-medium">Oh, ¡Vaya!</span> ¡Nombre es requerido!
+          </p>
+        }
+        @if(name.dirty && nameErrors['minlength']){
+          <p class="mt-2 text-sm text-red-600">
+            <span class="font-medium">Oh, ¡Vaya!</span> ¡Nombre es muy corto!
+          </p>
+        }
+        @if(name.dirty && nameErrors['maxlength']){
+          <p class="mt-2 text-sm text-red-600">
+            <span class="font-medium">Oh, ¡Vaya!</span> ¡Nombre es muy largo!
+          </p>
+        }
+      </div>
+      <div>
+        <label for="description" class="form-label">Descripción</label>
+        <input type="text" id="description" formControlName="description" class="form-control" required />
+        @if(description.dirty && descriptionErrors['required']){
+          <p class="mt-2 text-sm text-red-600">
+            <span class="font-medium">Oh, ¡Vaya!</span> ¡Descripción es requerido!
+          </p>
+        }
+        @if(description.dirty && descriptionErrors['minlength']){
+          <p class="mt-2 text-sm text-red-600">
+            <span class="font-medium">Oh, ¡Vaya!</span> ¡Descripción es muy corto!
+          </p>
+        }
+        @if(description.dirty && descriptionErrors['maxlength']){
+          <p class="mt-2 text-sm text-red-600">
+            <span class="font-medium">Oh, ¡Vaya!</span> ¡Descripción es muy largo!
+          </p>
+        }
+      </div>  
+      <div>
+        <label for="logo" class="form-label">Logo</label>
+        <input type="url" id="logo" formControlName="logo" class="form-control" required />
+        @if(logo.dirty && logoErrors['required']){
+          <p class="mt-2 text-sm text-red-600">
+            <span class="font-medium">Oh, ¡Vaya!</span> ¡Logo es requerido!
+          </p>
+        }
+      </div>
+      <div>
+        <label for="releaseDate" class="form-label">Fecha liberación </label>
+        <input type="text" id="releaseDate" formControlName="releaseDate" [matDatepicker]="pickerReleaseDate" (focus)="pickerReleaseDate.open()" (click)="pickerReleaseDate.open()" class="form-control" [min]="today" readonly required />
+        <mat-datepicker #pickerReleaseDate></mat-datepicker>
+        @if(releaseDate.dirty && releaseDateErrors['required']){
+          <p class="mt-2 text-sm text-red-600">
+            <span class="font-medium">Oh, ¡Vaya!</span> ¡Fecha liberación es requerido!
+          </p>
+        }
+      </div>
+      <div>
+        <label for="reviewDate" class="form-label">Fecha revisión</label>
+        <input type="text" id="reviewDate" formControlName="reviewDate" [matDatepicker]="pickerReviewDate" (focus)="pickerReviewDate.open()" (click)="pickerReviewDate.open()" class="form-control" required  />
+        <mat-datepicker #pickerReviewDate></mat-datepicker>
+      </div>
+    </div>
+
+    <div class="flex justify-center items-center gap-x-10 gap-y-5">
+      <button type="button" (click)="resetForm()" class="btn btn-secondary">Reiniciar</button>
+      <button type="submit" class="btn btn-primary">{{state === 'new'? 'Enviar' : 'Actualizar' }}</button>
+    </div>
+  </form>
+
+  </div>
+
+</div>

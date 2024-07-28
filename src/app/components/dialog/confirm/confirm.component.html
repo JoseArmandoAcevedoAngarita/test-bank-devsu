@@ -1,0 +1,12 @@
+<mat-dialog-content>
+  <p class="font-medium text-base text-center">¿Estás seguro de eliminar el producto {{data.name}} ?</p>
+</mat-dialog-content>
+
+<hr class="mt-5">
+
+<mat-dialog-actions>
+  <div class="w-full flex items-center gap-x-5 gap-y-5">
+    <button type="button" mat-dialog-close class="text-gray-900 bg-gray-300 hover:bg-gray-400 focus:ring-4 focus:ring-gray-100 focus:outline-none  font-medium rounded-md text-sm w-full px-10 py-3 text-center">Cancelar</button>
+    <button type="button" (click)="deleteProduct()" class="text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 focus:outline-none  font-medium rounded-md text-sm w-full px-10 py-3 text-center">Eliminar</button>
+  </div>
+</mat-dialog-actions>

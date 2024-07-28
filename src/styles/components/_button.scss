@@ -1,0 +1,11 @@
+@layer components{
+  .btn{
+    @apply font-medium rounded-md text-sm w-full sm:w-auto px-10 py-3 text-center disabled:opacity-80 disabled:cursor-not-allowed;
+  }
+  .btn.btn-primary{
+    @apply  text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 focus:outline-none;
+  }
+  .btn.btn-secondary{
+    @apply text-gray-900 bg-gray-300 hover:bg-gray-400 focus:ring-4 focus:ring-gray-100 focus:outline-none ;
+  }
+}
