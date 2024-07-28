@@ -9,7 +9,7 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
             </svg>
         </div>
-        <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" [(ngModel)]="filter" placeholder="Buscar..." required />
+        <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" [formControl]="filterControl" placeholder="Buscar..." required />
     </div>
   </div>
   <button type="button" class="btn btn-primary" routerLink="/formulario-de-registro">Agregar</button>
@@ -107,12 +107,38 @@
 
   <div class="w-full flex flex-wrap justify-between items-center">
     <span class="text-xs text-gray-700 font-medium">
-      <span class="hidden md:inline">Mostrando</span> {{pageIndex + 1}}-{{pageSize}} de {{financialProducts.length}} <span class="hidden md:inline">resultados</span>
+      <span class="hidden md:inline">Mostrando</span> {{pageIndex}}-{{pageSize}} de {{(financialProducts | filterAndPaginate: filter : pageSize : pageIndex).length}} <span class="hidden md:inline">resultados</span>
     </span>
+  
+    <nav aria-label="Page navigation example">
+      <ul class="flex items-center -space-x-px h-8 text-sm">
+        <li>
+          <a (click)="prevPage()" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
+            <span class="sr-only">Previous</span>
+            <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+            </svg>
+          </a>
+        </li>
+        @for(page of getPages(); track page){
+          <li>
+            <a (click)="onPageIndexChange(page)" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-yellow-100 hover:text-yellow-700" [class.text-yellow-600]="page === pageIndex" [class.bg-yellow-50]="page === pageIndex">{{page}}</a>
+          </li>
+        }
+        <li>
+          <a (click)="nextPage()" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
+            <span class="sr-only">Next</span>
+            <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </nav>
   
     <div class="relative flex justify-between items-center gap-x-2.5">
       <label for="pageSize" class="text-xs text-gray-700 font-medium hidden md:block">Registros por página</label>
-      <select id="pageSize" (change)="setPageSize($event)" class="bg-white border border-gray-500 text-black text-xs rounded-md focus:ring-blue-500 focus:border-blue-500 block w-14 px-2 py-1 ">
+      <select id="pageSize" (change)="onPageSizeChange($event)" class="bg-white border border-gray-500 text-black text-xs rounded-md focus:ring-blue-500 focus:border-blue-500 block w-14 px-2 py-1 ">
         <option [value]="5" selected>5</option>
         <option [value]="10">10</option>
         <option [value]="20">20</option>

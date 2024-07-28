@@ -20,7 +20,7 @@ describe('ListOfFinancialProductsComponent', () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
-      imports: [ListOfFinancialProductsComponent], // Importa el componente standalone aquí
+      imports: [ListOfFinancialProductsComponent],
       providers: [
         { provide: FinancialProductsService, useValue: financialProductsServiceSpy },
         { provide: MatDialog, useValue: dialogSpy },
@@ -60,23 +60,6 @@ describe('ListOfFinancialProductsComponent', () => {
     expect(component.getFinancialProducts).toHaveBeenCalled();
   });
 
- /*  it('should set status to loading and then to success after fetching financial products', fakeAsync(() => {
-    const mockProducts: FinancialProduct[] = [
-      { id: '1', name: 'Product 1', description: '', logo: '', date_release: '', date_revision: '' }
-    ];
-    financialProductsService.getFinancialProducts.and.returnValue(of({ data: mockProducts }));
-
-    component.getFinancialProducts();
-
-    expect(component.status).toBe('loading');
-    expect(financialProductsService.getFinancialProducts).toHaveBeenCalled();
-
-    flush();
-
-    expect(component.financialProducts).toEqual(mockProducts);
-    expect(component.status).toBe('success');
-  })); */
-
   it('should handle error when fetching financial products', () => {
     financialProductsService.getFinancialProducts.and.returnValue(throwError(() => new Error('error')));
 
@@ -87,5 +70,4 @@ describe('ListOfFinancialProductsComponent', () => {
     expect(component.openDialogAlert).toHaveBeenCalledWith('Ha ocurrido un error al cargar los datos, vuelva a intentarlo.');
   });
 
-  // Add more tests for other methods like setPageSize, openDialog, deleteProduct, etc.
 });
